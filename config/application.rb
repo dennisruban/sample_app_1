@@ -1,5 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
+
+require 'rails/all'
+
 # Pick the frameworks you want:
 require "active_record/railtie"
 require "action_controller/railtie"
@@ -17,6 +20,16 @@ end
 
 module SampleApp1
   class Application < Rails::Application
+    
+    
+    
+    
+    
+    
+    
+    if Rails.env.test?
+      initializer :after => :initialize_dependency_mechanism do
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -63,3 +76,5 @@ module SampleApp1
     config.assets.version = '1.0'
   end
 end
+end
+
