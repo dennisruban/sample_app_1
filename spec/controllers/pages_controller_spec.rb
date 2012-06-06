@@ -41,7 +41,7 @@ describe PagesController do
   
     describe "GET 'help'" do
     it "should be successful" do
-      get 'contact'
+      get 'help'
       response.should be_success
     end
     
