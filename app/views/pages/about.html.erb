@@ -1,6 +1,12 @@
 <html>
 	<head>
 			<title><%= @title %></title>
+					<%= stylesheet_link_tag 'bluprint/screen.css', :media => 'screen' %>
+
+<%= stylesheet_link_tag 'bluprint/print.css', :media => 'print' %>
+ 
+<!-[if IE]><link rel="stylesheet" href="stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]->
+
 		
 	</head>
 	
