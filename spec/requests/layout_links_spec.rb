@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "LayoutLinks" do
-  it "should have a Home page at'/" do
+  it "should have the right links on the layout" do
     get '/'
     responce.should have_selector('title', :content => "Home")
   end

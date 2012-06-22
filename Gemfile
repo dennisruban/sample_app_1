@@ -11,6 +11,7 @@ gem 'sqlite3-ruby', '1.3.3', :require => 'sqlite3'
 group :development do
   gem 'autotest'
   gem 'rspec-rails', '2.4.1'
+ # gem 'annotate-models', '1.0.4'
 end
 
 group :test do
