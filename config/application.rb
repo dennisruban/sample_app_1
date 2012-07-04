@@ -3,6 +3,14 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+
+# If you have a gemfile, require the gems listed there, including any gems
+# you've limited to :test, :devlopement, or : production.
+
+Bundler.require(:default, Rails.env) if defined?(Bundler)
+
+
+
 # Pick the frameworks you want:
 require "active_record/railtie"
 require "action_controller/railtie"
@@ -55,9 +63,7 @@ module SampleApp1
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-
+   
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
     # like if you have constraints or database-specific column types
@@ -77,6 +83,11 @@ module SampleApp1
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
-end
+  
+  
+  config.filter_parameters += [:password, :secret_code]
+  #Configure sensitive parameters which will be filtered from the log file.
+  config.filter_parameters += [:password]
+  end
 end
 
