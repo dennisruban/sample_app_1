@@ -7,6 +7,8 @@ module UsersHelper
                                           :gravatar => options)
 
 
-        end                                  
-           
-    end
+  end
+end
+       
+    
+       

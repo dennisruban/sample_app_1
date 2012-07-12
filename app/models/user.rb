@@ -1,9 +1,24 @@
-   
+   # == Schema Information
+#
+# Table name: users
+#
+#  id         :integer         not null, primary key
+#  name       :string(255)
+#  email      :string(255)
+#  created_at :datetime        not null
+#  updated_at :datetime        not null
+#
+
+      
       require 'digest'
       class User < ActiveRecord::Base
         attr_accessor :password
         attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
         attr_accessible :name
+        
+        
+        has_many :microposts, :dependent => :destroy
+        
         
         email_regex = /\A[\w+\-.]+@[a-z\-.]+\.[a-z]+\z/i
         
@@ -48,7 +63,10 @@
         end
         
         
-      
+      def feed
+        # this is preliminary. See Chapter 12 for the full implementation
+        Micropost.where("user_id = ?", id)
+      end
         
         
         private

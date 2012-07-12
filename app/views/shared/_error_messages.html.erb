@@ -1,4 +1,4 @@
-<% if @user.errors.any? %>
+<% if object.errors.any? %>
 
 	<div id="error_explanation">
 		
@@ -7,7 +7,7 @@
 			from being saved:</h2>
 		<p>There were problems with the following fields:</p>
 		<ul>
-			<% @user.errors.full_messages.each do |msg| %>
+			<% object.errors.full_messages.each do |msg| %>
 			<li><%= msg %></li>
 			<% end %>
 			
