@@ -1,23 +1,17 @@
-   # == Schema Information
-#
-# Table name: users
-#
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
-#
-
-      
-      require 'digest'
-      class User < ActiveRecord::Base
+class User < ActiveRecord::Base
         attr_accessor :password
         attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
         attr_accessible :name
         
         
         has_many :microposts, :dependent => :destroy
+        has_many :relationships, :foreign_key => "follower_id",
+                                 :dependent => :destroy
+        has_many :following, :through => :relationships, :source => :followed   
+        has_many :reverse_relationships, :foreign_key => "followed_id",
+                                         :class_name => "Relationship", 
+                                         :dependent => :destroy 
+        has_many :followers, :through => :reverse_relationships, :source => :follower                                                                     
         
         
         email_regex = /\A[\w+\-.]+@[a-z\-.]+\.[a-z]+\z/i
@@ -38,6 +32,16 @@
                               :length       => { :within => 6..40 }
                             
                             
+        def self.authenticate_with_salt(id, stored_salt)
+        
+        
+        def feed
+          # this is preliminary. See chapter 12 for the full implementation.
+         #  Micropost.where("user_id = ?", id)
+           Micropost.from_users_followed_by(self)
+        end
+        
+        
                             
         def self.authenticate(email, submitted_password)
           user = find_by_email(email)
@@ -51,7 +55,34 @@
           (user && user.salt == cookie_salt) ? user : nil
         end
                               
-                            
+   end
+   
+   def following?(followed)
+     relationships.find_by_followed_id(followed)
+   end
+   
+   def follow!(followed)
+     relationships.create!(:followed_id => followed.id)
+   end
+   
+   
+   def following?(followed)
+     relationships.find_by_followed_id(followed)
+   end
+   
+   
+   def follow!(followed)
+     relationships.create!(:followed_id => followed.id)
+   end
+   
+   
+   def unfollow!(followed)
+     relationships.find_by_followed_id(followed) .destroy
+   end
+   
+   
+   
+                          
         before_save :encrypt_password
       
       
@@ -63,10 +94,7 @@
         end
         
         
-      def feed
-        # this is preliminary. See Chapter 12 for the full implementation
-        Micropost.where("user_id = ?", id)
-      end
+      
         
         
         private

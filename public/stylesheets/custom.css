@@ -215,7 +215,10 @@ table.microposts tr td.micropost span.timestamp {
 	display: block;
 	font-size: 12px;
 	color: #666;
-	width:400px;
+	width:320px;
+}
+div.user_info {
+	width: 150px;
 }
 div.user_info img {
 	padding-right: 0.1em;
